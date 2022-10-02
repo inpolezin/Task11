@@ -2,14 +2,17 @@ package ru.kata.spring.boot_security.demo.model;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
