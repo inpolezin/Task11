@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         rolesForAdmin.add(roleUser);
         rolesForUser.add(roleUser);
         User admin = new User("admin", "admin", rolesForAdmin);
-        User user = new User ("user", "admin", rolesForUser);
+        User user = new User ("user", "user", rolesForUser);
         userRepository.save(admin);
         userRepository.save(user);
     }
