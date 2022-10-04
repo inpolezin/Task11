@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUser(User user) {
         User userDb = findUserById(user.getId());
         userDb.setUsername(user.getUsername());
-        userDb.setPassword(user.getPassword());
+        userDb.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userDb.setRoles(user.getRoles());
         userRepository.save(userDb);
     }
@@ -67,5 +67,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             return userOptional.get();
         }
+    }
+
+    @Override
+    public void init() {
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleUser = new Role("ROLE_USER");
+        roleRepository.save(roleAdmin);
+        roleRepository.save(roleUser);
+        List<Role> rolesForAdmin = new ArrayList<>();
+        List<Role> rolesForUser = new ArrayList<>();
+        rolesForAdmin.add(roleAdmin);
+        rolesForAdmin.add(roleUser);
+        rolesForUser.add(roleUser);
+        User admin = new User("admin", "admin", rolesForAdmin);
+        User user = new User ("user", "admin", rolesForUser);
+        userRepository.save(admin);
+        userRepository.save(user);
     }
 }
