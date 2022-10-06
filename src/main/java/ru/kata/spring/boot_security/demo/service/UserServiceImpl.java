@@ -12,6 +12,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Service
@@ -69,8 +70,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
+    @PostConstruct
     @Override
     public void init() {
+
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
         roleRepository.save(roleAdmin);
