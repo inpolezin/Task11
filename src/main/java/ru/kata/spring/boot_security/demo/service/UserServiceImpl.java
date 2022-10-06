@@ -76,16 +76,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
-        roleRepository.save(roleAdmin);
-        roleRepository.save(roleUser);
-        List<Role> rolesForAdmin = new ArrayList<>();
-        List<Role> rolesForUser = new ArrayList<>();
-        rolesForAdmin.add(roleAdmin);
-        rolesForAdmin.add(roleUser);
-        rolesForUser.add(roleUser);
-        User admin = new User("admin", "admin", rolesForAdmin);
-        User user = new User ("user", "user", rolesForUser);
-        userRepository.save(admin);
-        userRepository.save(user);
+        if (roleRepository.count() == 0) {
+            roleRepository.save(roleAdmin);
+            roleRepository.save(roleUser);
+            List<Role> rolesForAdmin = new ArrayList<>();
+            List<Role> rolesForUser = new ArrayList<>();
+            rolesForAdmin.add(roleAdmin);
+            rolesForAdmin.add(roleUser);
+            rolesForUser.add(roleUser);
+            User admin = new User("admin", "admin", rolesForAdmin);
+            User user = new User ("user", "user", rolesForUser);
+            userRepository.save(admin);
+            userRepository.save(user);
+        }
     }
 }
